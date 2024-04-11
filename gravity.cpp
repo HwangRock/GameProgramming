@@ -1,41 +1,41 @@
 #include <SDL.h>
 #include <iostream>
 
-// ¹°Ã¼ÀÇ À§Ä¡¿Í ¼Óµµ¸¦ ³ªÅ¸³»´Â ±¸Á¶Ã¼
+// ë¬¼ì²´ì˜ ìœ„ì¹˜ì™€ ì†ë„ë¥¼ ë‚˜íƒ€ë‚´ëŠ” êµ¬ì¡°ì²´
 struct Object {
-    float x, y;     // À§Ä¡
-    float vx, vy;   // ¼Óµµ
+    float x, y;     // ìœ„ì¹˜
+    float vx, vy;   // ì†ë„
 
-    Object(float x, float y) : x(x), y(y), vx(0.0f), vy(0.0f) {}//»ı¼ºÀÚ
+    Object(float x, float y) : x(x), y(y), vx(0.0f), vy(0.0f) {}//ìƒì„±ì
 };
 
-// È­¸é Å©±â
+// í™”ë©´ í¬ê¸°
 const int screen_x = 800, screen_y = 600;
 
-//°øÀÇ ¹İÁö¸§
+//ê³µì˜ ë°˜ì§€ë¦„
 const int radius = 10;
 
-// °øÀÇ ÃÊ±â À§Ä¡
+// ê³µì˜ ì´ˆê¸° ìœ„ì¹˜
 const float start_x = screen_x / 2, start_y = screen_y - 30;
 
-// Áß·Â °¡¼Óµµ
+// ì¤‘ë ¥ ê°€ì†ë„
 const float gravity = 0.098f;
 
-// Á¡ÇÁ ÃÊ±â ¼Óµµ
+// ì í”„ ì´ˆê¸° ì†ë„
 const float jump_speed = -3.5f;
 
 int main(int argc, char* argv[]) {
 
-    // SDL À©µµ¿ì »ı¼º
+    // SDL ìœˆë„ìš° ìƒì„±
     SDL_Window* window = SDL_CreateWindow("gravity", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_x, screen_y, SDL_WINDOW_SHOWN);
 
-    // SDL ·»´õ·¯ »ı¼º
+    // SDL ë Œë”ëŸ¬ ìƒì„±
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    // ¹°Ã¼ »ı¼º
+    // ë¬¼ì²´ ìƒì„±
     Object obj(start_x, start_y);
 
-    // ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     bool g_flag_running = false;
     bool jumping = false;
     while (!g_flag_running) {
@@ -63,10 +63,10 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // Áß·Â Àû¿ë
+        // ì¤‘ë ¥ ì ìš©
         obj.vy += gravity;
 
-        // ¹°Ã¼ ÀÌµ¿
+        // ë¬¼ì²´ ì´ë™
         if (obj.vx < 0 and obj.x > 10) {
             obj.x += obj.vx;
         }
@@ -75,23 +75,23 @@ int main(int argc, char* argv[]) {
         }
         obj.y += obj.vy;
         
-        // ¹°Ã¼°¡ Áö¸é¿¡ µµ´ŞÇÏ¸é Á¡ÇÁ »óÅÂ ÇØÁ¦
+        // ë¬¼ì²´ê°€ ì§€ë©´ì— ë„ë‹¬í•˜ë©´ ì í”„ ìƒíƒœ í•´ì œ
         if (obj.y >= start_y) {
             obj.y = start_y;
             obj.vy = 0.0f;
             jumping = false;
         }
 
-        // È­¸é Áö¿ì±â
+        // í™”ë©´ ì§€ìš°ê¸°
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        // ¶¥ ±×¸®±â
+        // ë•… ê·¸ë¦¬ê¸°
         SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
         SDL_Rect groundRect = { 0, screen_y - 20, screen_x, 20 };
         SDL_RenderFillRect(renderer, &groundRect);
 
-        // °ø ±×¸®±â
+        // ê³µ ê·¸ë¦¬ê¸°
         SDL_SetRenderDrawColor(renderer, 50, 150, 10, 255);
         for (int dy = -radius; dy <= radius; dy++) {
             for (int dx = -radius; dx <= radius; dx++) {
@@ -102,14 +102,14 @@ int main(int argc, char* argv[]) {
         }
 
 
-        // È­¸é ¾÷µ¥ÀÌÆ®
+        // í™”ë©´ ì—…ë°ì´íŠ¸
         SDL_RenderPresent(renderer);
 
-        // ÂªÀº Áö¿¬ ½Ã°£ Ãß°¡
+        // ì§§ì€ ì§€ì—° ì‹œê°„ ì¶”ê°€
         SDL_Delay(10);
     }
 
-    // SDL Á¾·á
+    // SDL ì¢…ë£Œ
     SDL_DestroyRenderer;
     return 0;
 }
